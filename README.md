@@ -41,3 +41,7 @@ Task: Develop a C# Windows Forms application that manages student records using 
 - Create a GitHub Repository:
   - Set up a new repository on GitHub and push your local commits to this remote repository.
 - Push Changes:
+  - After completing each task, push all commits to the GitHub repository.
+6. Error Handling and Documentation:
+- Implement error handling for file I/O operations and input validation to ensure a smooth user experience.
+- Include inline comments explaining key parts of the code for better readability and maintainability.
