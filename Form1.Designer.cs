@@ -39,9 +39,9 @@
             this.Btn_Add = new System.Windows.Forms.Button();
             this.Btn_Update = new System.Windows.Forms.Button();
             this.Btn_Report = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.DGV_StudentData = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_StudentData)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -146,14 +146,14 @@
             this.Btn_Report.UseVisualStyleBackColor = true;
             this.Btn_Report.Click += new System.EventHandler(this.Btn_Report_Click);
             // 
-            // dataGridView1
+            // DGV_StudentData
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(49, 237);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(335, 150);
-            this.dataGridView1.TabIndex = 11;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.DGV_StudentData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_StudentData.Location = new System.Drawing.Point(49, 237);
+            this.DGV_StudentData.Name = "DGV_StudentData";
+            this.DGV_StudentData.Size = new System.Drawing.Size(335, 150);
+            this.DGV_StudentData.TabIndex = 11;
+            this.DGV_StudentData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label5
             // 
@@ -170,7 +170,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(456, 416);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.DGV_StudentData);
             this.Controls.Add(this.Btn_Report);
             this.Controls.Add(this.Btn_Update);
             this.Controls.Add(this.Btn_Add);
@@ -185,7 +185,7 @@
             this.Name = "Form1";
             this.Text = "StudentID";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_StudentData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,7 +204,7 @@
         private System.Windows.Forms.Button Btn_Add;
         private System.Windows.Forms.Button Btn_Update;
         private System.Windows.Forms.Button Btn_Report;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView DGV_StudentData;
         private System.Windows.Forms.Label label5;
     }
 }
