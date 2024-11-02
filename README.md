@@ -1,5 +1,5 @@
 # StartSmartStudentManagement
-Members: Zander, Tyler, Tiago, Reghard
+Members: Zander, Tyler, Tiago, Reghard, Grace
 
 Task: Develop a C# Windows Forms application that manages student records using text files and incorporates Git version control. The application should include the following features:
 1. Add New Student: Through a form interface, allow the user to input student details (Student ID, Name, Age, and Course) and save these details to a file called students.txt.
