@@ -74,7 +74,13 @@ namespace StartSmartStudentManagement
 
         private void Btn_Update_Click(object sender, EventArgs e)
         {
+            UpdateForm updateForm = new UpdateForm();
 
+            //non-modal window (can interact with both forms)
+            updateForm.Show();
+
+            //modal window (blocks interaction with MainForm until UpdateForm is closed)
+            // updateForm.ShowDialog();
         }
 
         private void Btn_Report_Click(object sender, EventArgs e)
