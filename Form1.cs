@@ -113,7 +113,7 @@ namespace StartSmartStudentManagement
         {
             if (e.RowIndex >= 0)
             {
-                if (DGV_StudentData.Columns[e.ColumnIndex].Name == "Edit")
+                if (DGV_StudentData.Columns[e.ColumnIndex].Name == "Update")
                 {
                     btnEdit_Click(e.RowIndex);
                 }
