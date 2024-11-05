@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -13,6 +14,9 @@ namespace StartSmartStudentManagement
 {
     public partial class Form1 : Form
     {
+        string filepath = Path.Combine(Application.StartupPath, "students.txt");
+        string path = Path.Combine(Application.StartupPath, "Report.txt");
+        BusinessLogic businessLogic = new BusinessLogic();
         public Form1()
         {
             InitializeComponent();
@@ -25,15 +29,50 @@ namespace StartSmartStudentManagement
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dt.Columns.Add("StudentID", typeof(double));
-            dt.Columns.Add("Name", typeof(string));
-            dt.Columns.Add("Age", typeof(int));
-            dt.Columns.Add("CourseID", typeof(string));          
-            
+            DataTable studentData = businessLogic.LoadStudentData(filepath);
+            LoadStudentData();
+            AddEditDeleteButtons();
 
-            bindingSource.DataSource = dt;
-            DGV_StudentData.DataSource = bindingSource;
         }
+        private void LoadStudentData()
+        {
+            var data = businessLogic.LoadStudentData(filepath);
+            if (data == null || data.Rows.Count == 0)
+            {
+                DGV_StudentData.DataSource = data;
+                MessageBox.Show("Failed to load student data or there is no data. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            else
+            {
+                DGV_StudentData.DataSource = data;
+                DGV_StudentData.Columns["OriginalID"].Visible = false;
+            }
+        }
+        private void AddEditDeleteButtons()
+        {
+            DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn
+            {
+                Name = "Edit",
+                HeaderText = "",
+                Text = "Edit",
+                UseColumnTextForButtonValue = true,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.None
+            };
+
+            DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn
+            {
+                Name = "Delete",
+                HeaderText = "",
+                Text = "Delete",
+                UseColumnTextForButtonValue = true,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.None
+            };
+
+            DGV_StudentData.Columns.Add(editButtonColumn);
+            DGV_StudentData.Columns.Add(deleteButtonColumn);
+        }
+
 
         private void Btn_Add_Click(object sender, EventArgs e)
         {
@@ -72,6 +111,32 @@ namespace StartSmartStudentManagement
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0)
+            {
+                if (DGV_StudentData.Columns[e.ColumnIndex].Name == "Edit")
+                {
+                    btnEdit_Click(e.RowIndex);
+                }
+                else if (DGV_StudentData.Columns[e.ColumnIndex].Name == "Delete")
+                {
+                    btnDelete_Click(e.RowIndex);
+                }
+            }
+        }
+        private void btnEdit_Click(int rowIndex)
+        {
+            var selectedRow = DGV_StudentData.Rows[rowIndex];
+            businessLogic.UpdateStudentRecord(selectedRow, filepath);
+            LoadStudentData(); // Reload data to reflect the update
+            MessageBox.Show("Student record updated successfully.");
+        }
+
+        private void btnDelete_Click(int rowIndex)
+        {
+            string studentID = DGV_StudentData.Rows[rowIndex].Cells["StudentID"].Value?.ToString();
+            businessLogic.DeleteStudent(filepath, studentID);
+            MessageBox.Show("Student record deleted successfully.");
+            LoadStudentData(); // Reload data to reflect the deletion
 
         }
 
