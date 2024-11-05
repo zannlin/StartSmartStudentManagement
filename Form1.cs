@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,9 +18,21 @@ namespace StartSmartStudentManagement
             InitializeComponent();
         }
 
+
+        public BindingSource bindingSource = new BindingSource();
+        public DataTable dt = new DataTable();
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            dt.Columns.Add("StudentID", typeof(double));
+            dt.Columns.Add("Name", typeof(string));
+            dt.Columns.Add("Age", typeof(int));
+            dt.Columns.Add("CourseID", typeof(string));          
+            
 
+            bindingSource.DataSource = dt;
+            DGV_StudentData.DataSource = bindingSource;
         }
 
         private void Btn_Add_Click(object sender, EventArgs e)
@@ -84,6 +97,11 @@ namespace StartSmartStudentManagement
         }
 
         private void Btn_Report_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
         {
 
         }
