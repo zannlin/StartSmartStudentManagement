@@ -15,12 +15,15 @@ namespace StartSmartStudentManagement
     public partial class UpdateForm : Form
     {
         string filepath = Path.Combine(Application.StartupPath, "students.txt");
-        string path = Path.Combine(Application.StartupPath, "Report.txt");
         BusinessLogic businessLogic = new BusinessLogic();
 
-        public UpdateForm()
+        public UpdateForm(string CID,string CName,string CAge,string CCourse)
         {
             InitializeComponent();
+            txt_newStudentID.Text = CID;
+            txt_newName.Text = CName;
+            txt_newAge.Text = CAge;
+            txt_newCourseID.Text = CCourse;
         }
 
         public BindingSource bindingSource = new BindingSource();
@@ -99,6 +102,17 @@ namespace StartSmartStudentManagement
                 txt_newAge.Clear();
                 txt_newCourseID.Clear();
             }
+        }
+
+        private void btn_UpdateCom_Click(object sender, EventArgs e)
+        {
+            string studentID = txt_newStudentID.Text;
+            string name = txt_newName.Text;
+            string age = txt_newAge.Text;
+            string course = txt_newCourseID.Text;
+            businessLogic.UpdateStudentRecord(studentID, name, age, course);
+            this.Close();
+
         }
     }
 }

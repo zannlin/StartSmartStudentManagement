@@ -6,14 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Xml.Linq;
 
 namespace StartSmartStudentManagement
 {
     internal class BusinessLogic
     {
+        string path = Path.Combine(Application.StartupPath, "Report.txt");
         string filepath = Path.Combine(Application.StartupPath, "students.txt");
 
-        public DataTable LoadStudentData(string filepath)
+        public DataTable LoadStudentData()
         {
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("StudentID", typeof(string));
@@ -32,21 +35,17 @@ namespace StartSmartStudentManagement
 
             return dataTable;
         }
-        public void UpdateStudentRecord(DataGridViewRow row, string filepath)
+        public void UpdateStudentRecord(string studentID, string name, string age, string course)
         {
-            string originalID = row.Cells["OriginalID"].Value?.ToString() ?? string.Empty;
-            string studentID = row.Cells["StudentID"].Value?.ToString() ?? string.Empty;
-            string name = row.Cells["Name"].Value?.ToString() ?? string.Empty;
-            string age = row.Cells["Age"].Value?.ToString() ?? string.Empty;
-            string course = row.Cells["Course"].Value?.ToString() ?? string.Empty;
-
             var students = FileHandler.Read(filepath);
             bool found = false;
 
             for (int i = 0; i < students.Count; i++)
             {
-                if (students[i].StartsWith(originalID + ","))
+                // Here we're comparing the original ID to find the student to update
+                if (students[i].StartsWith(studentID + ","))
                 {
+                    // Update the student data with the new values
                     students[i] = $"{studentID},{name},{age},{course}";
                     found = true;
                     break;
@@ -54,19 +53,24 @@ namespace StartSmartStudentManagement
             }
 
             if (found)
+            {
                 FileHandler.Overwrite(filepath, students);
+                MessageBox.Show("Record Updated successfully");
+            }
             else
+            {
                 MessageBox.Show("Student ID not found, unable to update record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        public void DeleteStudent(string filepath, string studentID)
+        public void DeleteStudent (string studentID)
         {
             var students = FileHandler.Read(filepath);
             students = students.Where(line => !line.StartsWith(studentID + ",")).ToList();
             FileHandler.Overwrite(filepath, students);
         }
 
-        public List<string> GenerateReport(string path, string reportPath)
+        public List<string> GenerateReport()
         {
             List<string> students = FileHandler.Read(path);
             int numStudents = 0;
@@ -82,7 +86,7 @@ namespace StartSmartStudentManagement
             List<string> results = new List<string>();
             results.Add($"Total students: {numStudents}");
             results.Add($"Average age: {totalAge / numStudents}");
-            FileHandler.Overwrite(reportPath, results);
+            FileHandler.Overwrite(path, results);
 
 
             return results;
