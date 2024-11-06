@@ -33,7 +33,7 @@
             this.lbl_newName = new System.Windows.Forms.Label();
             this.lbl_newAge = new System.Windows.Forms.Label();
             this.lbl_newCourseID = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dvg_studentInfo = new System.Windows.Forms.DataGridView();
             this.txt_Search = new System.Windows.Forms.TextBox();
             this.txt_newStudentID = new System.Windows.Forms.TextBox();
             this.txt_newName = new System.Windows.Forms.TextBox();
@@ -43,7 +43,8 @@
             this.btn_CancelUpdate = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.btn_Search = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dvg_studentInfo)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,11 +52,11 @@
             // 
             this.lbl_Search.AutoSize = true;
             this.lbl_Search.ForeColor = System.Drawing.Color.Silver;
-            this.lbl_Search.Location = new System.Drawing.Point(192, 115);
+            this.lbl_Search.Location = new System.Drawing.Point(159, 117);
             this.lbl_Search.Name = "lbl_Search";
-            this.lbl_Search.Size = new System.Drawing.Size(132, 16);
+            this.lbl_Search.Size = new System.Drawing.Size(68, 16);
             this.lbl_Search.TabIndex = 0;
-            this.lbl_Search.Text = "Search by Student ID";
+            this.lbl_Search.Text = "Student ID";
             // 
             // lbl_newStudentID
             // 
@@ -97,22 +98,24 @@
             this.lbl_newCourseID.TabIndex = 4;
             this.lbl_newCourseID.Text = "Course ID:";
             // 
-            // dataGridView1
+            // dvg_studentInfo
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(52)))));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(135, 157);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(451, 175);
-            this.dataGridView1.TabIndex = 5;
+            this.dvg_studentInfo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(52)))));
+            this.dvg_studentInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dvg_studentInfo.Location = new System.Drawing.Point(135, 157);
+            this.dvg_studentInfo.Name = "dvg_studentInfo";
+            this.dvg_studentInfo.RowHeadersWidth = 51;
+            this.dvg_studentInfo.RowTemplate.Height = 24;
+            this.dvg_studentInfo.Size = new System.Drawing.Size(451, 175);
+            this.dvg_studentInfo.TabIndex = 5;
+            this.dvg_studentInfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvg_studentInfo_CellContentClick);
+            this.dvg_studentInfo.SelectionChanged += new System.EventHandler(this.dvg_studentInfo_SelectionChanged);
             // 
             // txt_Search
             // 
             this.txt_Search.BackColor = System.Drawing.Color.Silver;
             this.txt_Search.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txt_Search.Location = new System.Drawing.Point(343, 109);
+            this.txt_Search.Location = new System.Drawing.Point(266, 112);
             this.txt_Search.Name = "txt_Search";
             this.txt_Search.Size = new System.Drawing.Size(149, 22);
             this.txt_Search.TabIndex = 6;
@@ -164,6 +167,7 @@
             this.btn_UpdateCom.TabIndex = 11;
             this.btn_UpdateCom.Text = "Update";
             this.btn_UpdateCom.UseVisualStyleBackColor = false;
+            this.btn_UpdateCom.Click += new System.EventHandler(this.btn_UpdateCom_Click);
             // 
             // btn_CancelUpdate
             // 
@@ -176,6 +180,7 @@
             this.btn_CancelUpdate.TabIndex = 12;
             this.btn_CancelUpdate.Text = "Cancel";
             this.btn_CancelUpdate.UseVisualStyleBackColor = false;
+            this.btn_CancelUpdate.Click += new System.EventHandler(this.btn_CancelUpdate_Click);
             // 
             // label2
             // 
@@ -199,12 +204,26 @@
             this.panel1.Size = new System.Drawing.Size(732, 100);
             this.panel1.TabIndex = 15;
             // 
+            // btn_Search
+            // 
+            this.btn_Search.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(105)))), ((int)(((byte)(122)))));
+            this.btn_Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Search.ForeColor = System.Drawing.Color.Silver;
+            this.btn_Search.Location = new System.Drawing.Point(442, 109);
+            this.btn_Search.Name = "btn_Search";
+            this.btn_Search.Size = new System.Drawing.Size(94, 33);
+            this.btn_Search.TabIndex = 16;
+            this.btn_Search.Text = "Search";
+            this.btn_Search.UseVisualStyleBackColor = false;
+            this.btn_Search.Click += new System.EventHandler(this.btn_Search_Click);
+            // 
             // UpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(52)))));
             this.ClientSize = new System.Drawing.Size(732, 569);
+            this.Controls.Add(this.btn_Search);
             this.Controls.Add(this.btn_CancelUpdate);
             this.Controls.Add(this.btn_UpdateCom);
             this.Controls.Add(this.txt_newCourseID);
@@ -212,7 +231,7 @@
             this.Controls.Add(this.txt_newName);
             this.Controls.Add(this.txt_newStudentID);
             this.Controls.Add(this.txt_Search);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dvg_studentInfo);
             this.Controls.Add(this.lbl_newCourseID);
             this.Controls.Add(this.lbl_newAge);
             this.Controls.Add(this.lbl_newName);
@@ -221,7 +240,8 @@
             this.Controls.Add(this.panel1);
             this.Name = "UpdateForm";
             this.Text = "UpdateForm";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.UpdateForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dvg_studentInfo)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -236,7 +256,7 @@
         private System.Windows.Forms.Label lbl_newName;
         private System.Windows.Forms.Label lbl_newAge;
         private System.Windows.Forms.Label lbl_newCourseID;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dvg_studentInfo;
         private System.Windows.Forms.TextBox txt_Search;
         private System.Windows.Forms.TextBox txt_newStudentID;
         private System.Windows.Forms.TextBox txt_newName;
@@ -246,5 +266,6 @@
         private System.Windows.Forms.Button btn_CancelUpdate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btn_Search;
     }
 }
