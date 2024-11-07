@@ -37,9 +37,19 @@ namespace StartSmartStudentManagement
             set { _course = value; }
         }
 
+        public string StudentID1 { get; }
+
         public Student(double studentID, string name, int age, string course)
         {
             StudentID = studentID;
+            Name = name;
+            Age = age;
+            Course = course;
+        }
+
+        public Student(string studentID, string name, int age, string course)
+        {
+            StudentID1 = studentID;
             Name = name;
             Age = age;
             Course = course;
