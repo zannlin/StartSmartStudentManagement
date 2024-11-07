@@ -15,6 +15,15 @@ namespace StartSmartStudentManagement
 {
     public partial class Form1 : Form
     {
+
+        private BusinessLogicClass businessLogics;
+
+
+        string filepath = Path.Combine(Application.StartupPath, "students.txt");
+        string path = Path.Combine(Application.StartupPath, "Report.txt");
+        BusinessLogicClass businessLogic = new BusinessLogicClass();
+        string CID,CName,CAge,CCourse;
+
         public Form1()
         {
             InitializeComponent();
