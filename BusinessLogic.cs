@@ -70,9 +70,9 @@ namespace StartSmartStudentManagement
             FileHandler.Overwrite(filepath, students);
         }
 
-        public List<string> GenerateReport()
+        public void GenerateReport()
         {
-            List<string> students = FileHandler.Read(path);
+            List<string> students = FileHandler.Read(filepath);
             int numStudents = 0;
             int totalAge = 0;
 
@@ -88,8 +88,8 @@ namespace StartSmartStudentManagement
             results.Add($"Average age: {totalAge / numStudents}");
             FileHandler.Overwrite(path, results);
 
-
-            return results;
+            MessageBox.Show($"{results[0]}\n{results[1]}");
+            
         }
 
     }
