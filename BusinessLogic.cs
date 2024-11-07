@@ -13,8 +13,8 @@ namespace StartSmartStudentManagement
 {
     internal class BusinessLogic
     {
-        string path = Path.Combine(Application.StartupPath, "Report.txt");
-        string filepath = Path.Combine(Application.StartupPath, "students.txt");
+        readonly string path = Path.Combine(Application.StartupPath, "Report.txt");
+        readonly string filepath = Path.Combine(Application.StartupPath, "students.txt");
 
         public DataTable LoadStudentData()
         {
@@ -63,7 +63,7 @@ namespace StartSmartStudentManagement
             }
         }
 
-        public void DeleteStudent (string studentID)
+        public void DeleteStudent(string studentID)
         {
             var students = FileHandler.Read(filepath);
             students = students.Where(line => !line.StartsWith(studentID + ",")).ToList();
@@ -83,13 +83,15 @@ namespace StartSmartStudentManagement
                 totalAge += int.Parse(details[2]);
             }
 
-            List<string> results = new List<string>();
-            results.Add($"Total students: {numStudents}");
-            results.Add($"Average age: {totalAge / numStudents}");
+            List<string> results = new List<string>
+            {
+                $"Total students: {numStudents}",
+                $"Average age: {totalAge / numStudents}"
+            };
             FileHandler.Overwrite(path, results);
 
             MessageBox.Show($"{results[0]}\n{results[1]}");
-            
+
         }
 
     }
