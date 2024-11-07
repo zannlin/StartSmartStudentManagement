@@ -12,6 +12,13 @@ namespace StartSmartStudentManagement
         public static List<string> Read(string filepath)
         {
             List<string> lines = new List<string>();
+            
+            if (!File.Exists(filepath))
+            {
+                File.Create(filepath).Dispose();
+                return lines;
+            }
+
             if (File.Exists(filepath))
             {
                 using (StreamReader reader = new StreamReader(filepath))
