@@ -16,6 +16,8 @@ namespace StartSmartStudentManagement
         readonly string path = Path.Combine(Application.StartupPath, "Report.txt");
         readonly string filepath = Path.Combine(Application.StartupPath, "students.txt");
 
+        //<Your code>
+
         public DataTable LoadStudentData()
         {
             DataTable dataTable = new DataTable();
