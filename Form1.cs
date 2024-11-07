@@ -35,7 +35,7 @@ namespace StartSmartStudentManagement
             AddDeleteButtons();
 
         }
-        private void LoadStudentData()
+        public void LoadStudentData()
         {
             var data = businessLogic.LoadStudentData();
             if (data == null || data.Rows.Count == 0)
@@ -150,12 +150,11 @@ namespace StartSmartStudentManagement
             {
                 // Get the selected row as a DataGridViewRow object
                 DataGridViewRow row = DGV_StudentData.SelectedRows[0];
+                CID = row.Cells[0].Value?.ToString() ?? string.Empty;
+                CName = row.Cells[1].Value?.ToString() ?? string.Empty;
+                CAge = row.Cells[2].Value?.ToString() ?? string.Empty;
+                CCourse = row.Cells[3].Value?.ToString() ?? string.Empty;
 
-                // Assign the cell values to the textboxes
-                Txt_StudentID.Text = row.Cells[0].Value?.ToString() ?? string.Empty;
-                Txt_Name.Text = row.Cells[1].Value?.ToString() ?? string.Empty;
-                Txt_Age.Text = row.Cells[2].Value?.ToString() ?? string.Empty;
-                Txt_Course.Text = row.Cells[3].Value?.ToString() ?? string.Empty;
             }
             else
             {
@@ -174,13 +173,13 @@ namespace StartSmartStudentManagement
 
         private void Btn_Update_Click(object sender, EventArgs e)
         {
-            UpdateForm updateForm = new UpdateForm(CID,CName,CAge,CCourse);
+            UpdateForm updateForm = new UpdateForm(CID,CName,CAge,CCourse, this);
 
             //non-modal window (can interact with both forms)
             updateForm.Show();
-
+            this.Hide();
             //modal window (blocks interaction with MainForm until UpdateForm is closed)
-            // updateForm.ShowDialog();
+            //updateForm.ShowDialog();
         }
 
         private void Btn_Report_Click(object sender, EventArgs e)

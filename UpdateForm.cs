@@ -14,22 +14,26 @@ namespace StartSmartStudentManagement
 {
     public partial class UpdateForm : Form
     {
+        public Form1 mainForm;
         string filepath = Path.Combine(Application.StartupPath, "students.txt");
         BusinessLogic businessLogic = new BusinessLogic();
         DataTable studentData;
+        string ID, SName, Age, Course;
 
-        public UpdateForm(string CID,string CName,string CAge,string CCourse)
+        public UpdateForm(string CID, string CName, string CAge, string CCourse, Form1 form1)
         {
             InitializeComponent();
-            txt_newStudentID.Text = CID;
-            txt_newName.Text = CName;
-            txt_newAge.Text = CAge;
-            txt_newCourseID.Text = CCourse;
+            this.Load += UpdateForm_Load;
+            ID = CID;
+            SName = CName;
+            Age = CAge;
+            Course = CCourse;
+            mainForm = form1;
         }
 
         public BindingSource bindingSource = new BindingSource();
-        
-       
+
+
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -40,6 +44,10 @@ namespace StartSmartStudentManagement
             studentData = businessLogic.LoadStudentData();
             dvg_studentInfo.DataSource = studentData;
             LoadStudentData();
+            txt_newStudentID.Text = ID;
+            txt_newName.Text = SName;
+            txt_newAge.Text = Age;
+            txt_newCourseID.Text = Course;
         }
 
         private void btn_Search_Click(object sender, EventArgs e)
@@ -49,6 +57,7 @@ namespace StartSmartStudentManagement
         private void btn_CancelUpdate_Click(object sender, EventArgs e)
         {
             this.Close();
+            mainForm.Show();
         }
 
         private void LoadStudentData()
@@ -96,11 +105,14 @@ namespace StartSmartStudentManagement
 
         private void btn_UpdateCom_Click(object sender, EventArgs e)
         {
+
             string studentID = txt_newStudentID.Text;
             string name = txt_newName.Text;
             string age = txt_newAge.Text;
             string course = txt_newCourseID.Text;
             businessLogic.UpdateStudentRecord(studentID, name, age, course);
+            mainForm.LoadStudentData();
+            mainForm.Show();
             this.Close();
 
         }
@@ -126,7 +138,7 @@ namespace StartSmartStudentManagement
         }
         private void btn_SearchN_Click(object sender, EventArgs e)
         {
-            SearchStudent(txt_Search.Text.Trim(),studentData );
+            SearchStudent(txt_Search.Text.Trim(), studentData);
         }
     }
 }
