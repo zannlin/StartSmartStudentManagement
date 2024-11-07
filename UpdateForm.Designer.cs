@@ -166,7 +166,7 @@
             // 
             this.btn_UpdateCom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(105)))), ((int)(((byte)(122)))));
             this.btn_UpdateCom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_UpdateCom.ForeColor = System.Drawing.Color.Silver;
+            this.btn_UpdateCom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btn_UpdateCom.Location = new System.Drawing.Point(228, 489);
             this.btn_UpdateCom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_UpdateCom.Name = "btn_UpdateCom";
@@ -180,7 +180,7 @@
             // 
             this.btn_CancelUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(105)))), ((int)(((byte)(122)))));
             this.btn_CancelUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_CancelUpdate.ForeColor = System.Drawing.Color.Silver;
+            this.btn_CancelUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn_CancelUpdate.Location = new System.Drawing.Point(373, 489);
             this.btn_CancelUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_CancelUpdate.Name = "btn_CancelUpdate";
