@@ -16,38 +16,14 @@ namespace StartSmartStudentManagement
         readonly string path = Path.Combine(Application.StartupPath, "Report.txt");
         readonly string filepath = Path.Combine(Application.StartupPath, "students.txt");
 
-        //<Your code>
+
         public void AddStudent(string studentID, string name, int age, string course)
         {
             Student student = new Student(double.Parse(studentID), name, age, course);
             FileHandler.Write(filepath, $"{student.StudentID},{student.Name},{student.Age},{student.Course}");
         }
 
-
-    public DataTable GetAllStudents()
-    {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("Student ID");
-        dt.Columns.Add("Name");
-        dt.Columns.Add("Age");
-        dt.Columns.Add("Course");
-
-        if (File.Exists(filepath))
-        {
-            string[] lines = File.ReadAllLines(filepath);
-            foreach (string line in lines)
-            {
-                string[] details = line.Split(',');
-                dt.Rows.Add(details[0], details[1], details[2], details[3]);
-            }
-        }
-        return dt;
-    }
-
-
-   
-
-    public DataTable LoadStudentData()
+        public DataTable LoadStudentData()
         {
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("StudentID", typeof(string));
@@ -60,7 +36,7 @@ namespace StartSmartStudentManagement
             foreach (var student in students)
             {
                 var fields = student.Split(',');
-               
+
                 int age = int.TryParse(fields[2], out age) ? age : 0;
 
                 if (fields.Length >= 4)
@@ -117,11 +93,11 @@ namespace StartSmartStudentManagement
 
                 if (int.TryParse(details[2], out int age))
                 {
-                   totalAge += age;
+                    totalAge += age;
                 }
                 else
                 {
-                   MessageBox.Show($"Invalid age given for {details[1]}. Value: {details[2]}");
+                    MessageBox.Show($"Invalid age given for {details[1]}. Value: {details[2]}");
                 }
             }
 
