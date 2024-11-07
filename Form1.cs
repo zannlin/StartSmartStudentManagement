@@ -17,6 +17,7 @@ namespace StartSmartStudentManagement
         string filepath = Path.Combine(Application.StartupPath, "students.txt");
         string path = Path.Combine(Application.StartupPath, "Report.txt");
         BusinessLogic businessLogic = new BusinessLogic();
+        string CID,CName,CAge,CCourse;
         public Form1()
         {
             InitializeComponent();
@@ -29,14 +30,14 @@ namespace StartSmartStudentManagement
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DataTable studentData = businessLogic.LoadStudentData(filepath);
+            DataTable studentData = businessLogic.LoadStudentData();
             LoadStudentData();
-            AddEditDeleteButtons();
+            AddDeleteButtons();
 
         }
-        private void LoadStudentData()
+        public void LoadStudentData()
         {
-            var data = businessLogic.LoadStudentData(filepath);
+            var data = businessLogic.LoadStudentData();
             if (data == null || data.Rows.Count == 0)
             {
                 DGV_StudentData.DataSource = data;
@@ -49,16 +50,8 @@ namespace StartSmartStudentManagement
                 DGV_StudentData.Columns["OriginalID"].Visible = false;
             }
         }
-        private void AddEditDeleteButtons()
+        private void AddDeleteButtons()
         {
-            DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn
-            {
-                Name = "Edit",
-                HeaderText = "",
-                Text = "Edit",
-                UseColumnTextForButtonValue = true,
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.None
-            };
 
             DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn
             {
@@ -69,7 +62,6 @@ namespace StartSmartStudentManagement
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.None
             };
 
-            DGV_StudentData.Columns.Add(editButtonColumn);
             DGV_StudentData.Columns.Add(deleteButtonColumn);
         }
 
@@ -113,28 +105,30 @@ namespace StartSmartStudentManagement
         {
             if (e.RowIndex >= 0)
             {
-                if (DGV_StudentData.Columns[e.ColumnIndex].Name == "Edit")
+                DataGridViewRow row = DGV_StudentData.Rows[e.RowIndex];
+                try
                 {
-                    btnEdit_Click(e.RowIndex);
+                    CID = row.Cells["StudentID"].Value?.ToString();
+                    CName = row.Cells["Name"].Value?.ToString();
+                    CAge = row.Cells["Age"].Value?.ToString();
+                    CCourse = row.Cells["Course"].Value?.ToString();
                 }
-                else if (DGV_StudentData.Columns[e.ColumnIndex].Name == "Delete")
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error accessing values: {ex.Message}");
+                }
+
+                if (DGV_StudentData.Columns[e.ColumnIndex].Name == "Delete")
                 {
                     btnDelete_Click(e.RowIndex);
                 }
             }
         }
-        private void btnEdit_Click(int rowIndex)
-        {
-            var selectedRow = DGV_StudentData.Rows[rowIndex];
-            businessLogic.UpdateStudentRecord(selectedRow, filepath);
-            LoadStudentData(); // Reload data to reflect the update
-            MessageBox.Show("Student record updated successfully.");
-        }
 
         private void btnDelete_Click(int rowIndex)
         {
             string studentID = DGV_StudentData.Rows[rowIndex].Cells["StudentID"].Value?.ToString();
-            businessLogic.DeleteStudent(filepath, studentID);
+            businessLogic.DeleteStudent(studentID);
             MessageBox.Show("Student record deleted successfully.");
             LoadStudentData(); // Reload data to reflect the deletion
 
@@ -150,20 +144,47 @@ namespace StartSmartStudentManagement
 
         }
 
+        private void DGV_StudentData_SelectionChanged(object sender, EventArgs e)
+        {
+            if (DGV_StudentData.SelectedRows.Count > 0)
+            {
+                // Get the selected row as a DataGridViewRow object
+                DataGridViewRow row = DGV_StudentData.SelectedRows[0];
+                CID = row.Cells[0].Value?.ToString() ?? string.Empty;
+                CName = row.Cells[1].Value?.ToString() ?? string.Empty;
+                CAge = row.Cells[2].Value?.ToString() ?? string.Empty;
+                CCourse = row.Cells[3].Value?.ToString() ?? string.Empty;
+
+            }
+            else
+            {
+                // Clear the textboxes if no row is selected
+                Txt_StudentID.Clear();
+                Txt_Name.Clear();
+                Txt_Age.Clear();
+                Txt_Course.Clear();
+            }
+        }
+
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void Btn_Update_Click(object sender, EventArgs e)
         {
-            UpdateForm updateForm = new UpdateForm();
+            UpdateForm updateForm = new UpdateForm(CID,CName,CAge,CCourse, this);
 
             //non-modal window (can interact with both forms)
             updateForm.Show();
-
+            this.Hide();
             //modal window (blocks interaction with MainForm until UpdateForm is closed)
-            // updateForm.ShowDialog();
+            //updateForm.ShowDialog();
         }
 
         private void Btn_Report_Click(object sender, EventArgs e)
         {
-
+            businessLogic.GenerateReport();
         }
 
         private void label5_Click(object sender, EventArgs e)

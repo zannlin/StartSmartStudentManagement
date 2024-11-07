@@ -8,8 +8,6 @@ namespace StartSmartStudentManagement
 {
     internal static class Program
     {
-        static readonly string studentsFilePath = "students.txt";
-        static readonly string summaryFilePath = "summary.txt";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
