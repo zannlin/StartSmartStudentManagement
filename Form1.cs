@@ -184,7 +184,7 @@ namespace StartSmartStudentManagement
 
         private void Btn_Report_Click(object sender, EventArgs e)
         {
-
+            businessLogic.GenerateReport();
         }
 
         private void label5_Click(object sender, EventArgs e)
