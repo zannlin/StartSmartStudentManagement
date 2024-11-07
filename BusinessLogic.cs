@@ -29,8 +29,11 @@ namespace StartSmartStudentManagement
             foreach (var student in students)
             {
                 var fields = student.Split(',');
+               
+                int age = int.TryParse(fields[2], out age) ? age : 0;
+
                 if (fields.Length >= 4)
-                    dataTable.Rows.Add(fields[0], fields[1], int.Parse(fields[2]), fields[3], fields[0]);
+                    dataTable.Rows.Add(fields[0], fields[1], age, fields[3], fields[0]);
             }
 
             return dataTable;
@@ -80,7 +83,15 @@ namespace StartSmartStudentManagement
             {
                 string[] details = student.Split(',');
                 numStudents++;
-                totalAge += int.Parse(details[2]);
+
+                if (int.TryParse(details[2], out int age))
+                {
+                   totalAge += age;
+                }
+                else
+                {
+                   MessageBox.Show($"Invalid age given for {details[1]}. Value: {details[2]}");
+                }
             }
 
             List<string> results = new List<string>
@@ -91,7 +102,6 @@ namespace StartSmartStudentManagement
             FileHandler.Overwrite(path, results);
 
             MessageBox.Show($"{results[0]}\n{results[1]}");
-
         }
 
     }
