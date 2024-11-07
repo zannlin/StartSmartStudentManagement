@@ -16,6 +16,7 @@ namespace StartSmartStudentManagement
     {
         string filepath = Path.Combine(Application.StartupPath, "students.txt");
         BusinessLogic businessLogic = new BusinessLogic();
+        DataTable studentData;
 
         public UpdateForm(string CID,string CName,string CAge,string CCourse)
         {
@@ -27,8 +28,7 @@ namespace StartSmartStudentManagement
         }
 
         public BindingSource bindingSource = new BindingSource();
-        public DataTable dt = new DataTable();
-
+        
        
         private void label2_Click(object sender, EventArgs e)
         {
@@ -37,18 +37,13 @@ namespace StartSmartStudentManagement
 
         private void UpdateForm_Load(object sender, EventArgs e)
         {
-            DataTable studentData = businessLogic.LoadStudentData(filepath);
+            studentData = businessLogic.LoadStudentData();
+            dvg_studentInfo.DataSource = studentData;
             LoadStudentData();
         }
 
         private void btn_Search_Click(object sender, EventArgs e)
         {
-            string searchID = txt_Search.Text;
-
-            DataRow[] rows = dt.Select("StudentID = '" + searchID + "'");
-
-           dt.Rows.Clear();
-            dt.Rows.Add(rows[0]);
         }
 
         private void btn_CancelUpdate_Click(object sender, EventArgs e)
@@ -56,14 +51,9 @@ namespace StartSmartStudentManagement
             this.Close();
         }
 
-        private void btn_UpdateCom_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void LoadStudentData()
         {
-            var data = businessLogic.LoadStudentData(filepath);
+            var data = businessLogic.LoadStudentData();
             if (data == null || data.Rows.Count == 0)
             {
                 dvg_studentInfo.DataSource = data;
@@ -113,6 +103,30 @@ namespace StartSmartStudentManagement
             businessLogic.UpdateStudentRecord(studentID, name, age, course);
             this.Close();
 
+        }
+
+        private void SearchStudent(string searchID, DataTable dataTable)
+        {
+            DataRow[] rows = dataTable.Select("StudentID = '" + searchID + "'");
+
+            if (rows.Length > 0)
+            {
+                DataTable filteredTable = dataTable.Clone();  // Copy the structure of `dataTable`
+                foreach (DataRow row in rows)
+                {
+                    filteredTable.ImportRow(row);
+                }
+                dvg_studentInfo.DataSource = filteredTable;
+            }
+            else
+            {
+                MessageBox.Show("No student found with the given ID.", "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dvg_studentInfo.DataSource = dataTable;  // Reset to display all students if none are found
+            }
+        }
+        private void btn_SearchN_Click(object sender, EventArgs e)
+        {
+            SearchStudent(txt_Search.Text.Trim(),studentData );
         }
     }
 }

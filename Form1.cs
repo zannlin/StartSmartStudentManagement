@@ -144,6 +144,34 @@ namespace StartSmartStudentManagement
 
         }
 
+        private void DGV_StudentData_SelectionChanged(object sender, EventArgs e)
+        {
+            if (DGV_StudentData.SelectedRows.Count > 0)
+            {
+                // Get the selected row as a DataGridViewRow object
+                DataGridViewRow row = DGV_StudentData.SelectedRows[0];
+
+                // Assign the cell values to the textboxes
+                Txt_StudentID.Text = row.Cells[0].Value?.ToString() ?? string.Empty;
+                Txt_Name.Text = row.Cells[1].Value?.ToString() ?? string.Empty;
+                Txt_Age.Text = row.Cells[2].Value?.ToString() ?? string.Empty;
+                Txt_Course.Text = row.Cells[3].Value?.ToString() ?? string.Empty;
+            }
+            else
+            {
+                // Clear the textboxes if no row is selected
+                Txt_StudentID.Clear();
+                Txt_Name.Clear();
+                Txt_Age.Clear();
+                Txt_Course.Clear();
+            }
+        }
+
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void Btn_Update_Click(object sender, EventArgs e)
         {
             UpdateForm updateForm = new UpdateForm(CID,CName,CAge,CCourse);
