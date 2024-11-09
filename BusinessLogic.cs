@@ -19,7 +19,8 @@ namespace StartSmartStudentManagement
 
         public void AddStudent(string studentID, string name, int age, string course)
         {
-            Student student = new Student(double.Parse(studentID), name, age, course);
+            int StudentID = int.TryParse(studentID, out int id) ? id : 0;
+            Student student = new Student(StudentID, name, age, course);
             FileHandler.Write(filepath, $"{student.StudentID},{student.Name},{student.Age},{student.Course}");
         }
 
