@@ -26,7 +26,7 @@ namespace StartSmartStudentManagement
         }
 
         public int Age
-        {
+        { 
             get { return _age; }
             set { _age = value; }
         }
