@@ -16,6 +16,14 @@ namespace StartSmartStudentManagement
         readonly string path = Path.Combine(Application.StartupPath, "Report.txt");
         readonly string filepath = Path.Combine(Application.StartupPath, "students.txt");
 
+
+        public void AddStudent(string studentID, string name, int age, string course)
+        {
+            int StudentID = int.TryParse(studentID, out int id) ? id : 0;
+            Student student = new Student(StudentID, name, age, course);
+            FileHandler.Write(filepath, $"{student.StudentID},{student.Name},{student.Age},{student.Course}");
+        }
+
         public DataTable LoadStudentData()
         {
             DataTable dataTable = new DataTable();
@@ -29,7 +37,7 @@ namespace StartSmartStudentManagement
             foreach (var student in students)
             {
                 var fields = student.Split(',');
-               
+
                 int age = int.TryParse(fields[2], out age) ? age : 0;
 
                 if (fields.Length >= 4)
@@ -86,11 +94,11 @@ namespace StartSmartStudentManagement
 
                 if (int.TryParse(details[2], out int age))
                 {
-                   totalAge += age;
+                    totalAge += age;
                 }
                 else
                 {
-                   MessageBox.Show($"Invalid age given for {details[1]}. Value: {details[2]}");
+                    MessageBox.Show($"Invalid age given for {details[1]}. Value: {details[2]}");
                 }
             }
 

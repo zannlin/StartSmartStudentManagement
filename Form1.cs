@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace StartSmartStudentManagement
 {
@@ -17,7 +18,7 @@ namespace StartSmartStudentManagement
         string filepath = Path.Combine(Application.StartupPath, "students.txt");
         string path = Path.Combine(Application.StartupPath, "Report.txt");
         BusinessLogic businessLogic = new BusinessLogic();
-        string CID,CName,CAge,CCourse;
+        string CID, CName, CAge, CCourse;
         public Form1()
         {
             InitializeComponent();
@@ -68,7 +69,28 @@ namespace StartSmartStudentManagement
 
         private void Btn_Add_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(Txt_StudentID.Text) &&
+                !string.IsNullOrEmpty(Txt_Name.Text) &&
+                !string.IsNullOrEmpty(Txt_Age.Text) &&
+                !string.IsNullOrEmpty(Txt_Course.Text))
+            {
+                int Age = int.TryParse(Txt_Age.Text, out Age) ? Age : 0;
+                if (Age > 0)
+                {
+                    businessLogic.AddStudent(Txt_StudentID.Text, Txt_Name.Text, Age, Txt_Course.Text);
 
+                    //Refresh data
+                    LoadStudentData();
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid age greater than 0");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please fill in all fields.");
+            }
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -173,7 +195,7 @@ namespace StartSmartStudentManagement
 
         private void Btn_Update_Click(object sender, EventArgs e)
         {
-            UpdateForm updateForm = new UpdateForm(CID,CName,CAge,CCourse, this);
+            UpdateForm updateForm = new UpdateForm(CID, CName, CAge, CCourse, this);
 
             //non-modal window (can interact with both forms)
             updateForm.Show();
